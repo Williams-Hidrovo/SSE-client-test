@@ -13,11 +13,14 @@ const defaultUser = {
   lastName: '___',
   age: 999
 }
+
 const App = () => {
   const props = 'stream'
-  const eventSource = new EventSource(`http://localhost:5555/${props}`)
+  const props2 = 'test'
+  //const eventSource = new EventSource(`http://localhost:5555/${props}`)
+  const eventSource = new EventSource(`https://sse.dev/${props2}`)
 
-  const [user, setUser] = useState<Iuser>()
+  const [user, setUser] = useState(null)
   useEffect(() => {
     eventSource.onmessage = event => {
       console.log(event.data)
@@ -31,11 +34,9 @@ const App = () => {
   return (
     <div>
       <p>{JSON.stringify(user)}</p>
-      <p>{user?.id}</p>
-      <p>{user?.name}</p>
-      <p>{user?.lastName}</p>
-      <p>{user?.age}</p>
+      <p>user.now:{user?.now}</p>
       <p>Url: {eventSource.url}</p>
+      <p>{eventSource.readyState}</p>
     </div>
   )
 }
